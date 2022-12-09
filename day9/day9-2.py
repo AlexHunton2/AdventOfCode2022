@@ -1,35 +1,3 @@
-'''
-......    ....H.    ....H.    ....H.     ....H.    
-....H.    ....1.    ....1.    ....1.     ....1.
-....1. -> ...... -> ....2. -> ...32. ->  ..432.
-.432..    .432..    .43...    .4....     .5....
-5.....    5.....    5.....    5.....     6.....
-'''
-
-'''
-..........................
-..........................
-..........................
-..........................
-..........................
-..........................
-..........................
-................H......... 8
-................1......... 7
-................2......... 6
-................3......... 5
-...............54......... 4
-..............6........... 3
-.............7............ 2
-............8............. 1
-...........s.............. 0 
-..........................
-..........................
-..........................
-..........................
-..........................
-'''
-
 import math
 
 tail_positions = set([])
@@ -38,34 +6,30 @@ rope = [[0,0] for i in range(0, 10)]
 
 
 def calculateNewBack(front, back, incx, incy):
-    if (front[0] == back[0] and front[1] == back[1]):
-        back[0] += incx
-        back[1] += incy
+    xdis = front[0] - back[0]
+    ydis = front[1] - back[1]
+    d = ''
+    if abs(xdis) == abs(ydis):
+        if xdis > 0 and ydis > 0:
+            d = 'urdi'
+        elif xdis > 0 and ydis < 0:
+            d = 'drdi'
+        elif xdis < 0 and ydis < 0:
+            d = 'dldi'
+        elif xdis < 0 and ydis > 0:
+            d = 'uldi'
     else:
-        xdis = front[0] - back[0]
-        ydis = front[1] - back[1]
-        d = ''
-        if abs(xdis) == abs(ydis):
-            if xdis > 0 and ydis > 0:
-                d = 'urdi'
-            elif xdis > 0 and ydis < 0:
-                d = 'drdi'
-            elif xdis < 0 and ydis < 0:
-                d = 'dldi'
-            elif xdis < 0 and ydis > 0:
-                d = 'uldi'
-        else:
-            if abs(xdis) == 2:
-                if xdis > 0:
-                    d = 'r'
-                else:
-                    d = 'l'
-            if abs(ydis) == 2:
-                if ydis > 0:
-                    d = 'u'
-                else:
-                    d = 'd'
-        calculateDiagonal(front, back, d)
+        if abs(xdis) == 2:
+            if xdis > 0:
+                d = 'r'
+            else:
+                d = 'l'
+        if abs(ydis) == 2:
+            if ydis > 0:
+                d = 'u'
+            else:
+                d = 'd'
+    calculateDiagonal(front, back, d)
 
 def calculateDiagonal(front, back, direction):
     if direction == 'r':
